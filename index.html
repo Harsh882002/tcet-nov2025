@@ -7,19 +7,20 @@
 <style>
   :root{
     --bg: #0f172a;
-    --card: #0b1220;
     --muted: #94a3b8;
     --accent: #06b6d4;
-    --glass: rgba(255,255,255,0.03);
-    --maxw:1200px;
+    --card-grad-a: rgba(255,255,255,0.02);
+    --card-grad-b: rgba(255,255,255,0.01);
     --radius:14px;
+    --maxw:1200px;
+    --pad:14px;
   }
 
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
     margin:0;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     background:
       radial-gradient(800px 400px at 10% 10%, rgba(6,182,212,0.06), transparent 8%),
       radial-gradient(700px 350px at 90% 90%, rgba(99,102,241,0.045), transparent 8%),
@@ -28,8 +29,11 @@
     padding:36px 18px;
     display:flex;
     justify-content:center;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
 
+  /* page container */
   .page{
     width:100%;
     max-width:var(--maxw);
@@ -60,9 +64,9 @@
     font-size:20px;
     letter-spacing:-0.2px;
   }
-  header .headtext p{margin:6px 0 0;color:var(--muted);font-size:13px}
+  header .headtext p{margin:6px 0 0;color:var(--muted);font-size:13px;max-width:880px}
 
-  /* grid */
+  /* grid: responsive columns - auto-fit handles many sizes */
   .grid{
     display:grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -72,18 +76,20 @@
 
   /* card */
   .card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    background: linear-gradient(180deg, var(--card-grad-a), var(--card-grad-b));
     border-radius:var(--radius);
-    padding:14px;
+    padding:var(--pad);
     box-shadow: 0 10px 30px rgba(2,6,23,0.6);
     border: 1px solid rgba(255,255,255,0.03);
     display:flex;
     gap:12px;
     align-items:flex-start;
     transition: transform .16s ease, box-shadow .16s ease;
+    min-height:110px;
   }
   .card:hover{ transform: translateY(-6px); box-shadow: 0 18px 40px rgba(2,6,23,0.7); }
 
+  /* thumbnail */
   .thumb{
     position:relative;
     flex:0 0 120px;
@@ -95,8 +101,9 @@
     align-items:center;
     justify-content:center;
     border: 1px solid rgba(255,255,255,0.03);
+    padding:8px;
   }
-  .thumb svg{ display:block }
+  .thumb svg{ display:block; width:100%; height:100%; object-fit:cover }
 
   .num {
     position:absolute;
@@ -111,18 +118,20 @@
     box-shadow: 0 6px 18px rgba(2,6,23,0.6);
   }
 
-  /* title + desc column */
+  /* content column */
   .content{
     flex:1;
     display:flex;
     flex-direction:column;
     gap:8px;
+    min-width:0;
   }
 
   .title{
     font-weight:700;
     font-size:15px;
     color:#f8fafc;
+    line-height:1.1;
   }
   .desc{ color:var(--muted); font-size:13px; margin-top:2px; }
 
@@ -134,7 +143,7 @@
 
   .block{
     min-width:0;
-    flex:1 1 200px;
+    flex:1 1 220px;
   }
 
   .block strong{display:block;color:#cfe8ff;margin-bottom:6px;font-size:13px}
@@ -144,6 +153,7 @@
     font-size:13px;
     line-height:1.4;
   }
+
   .hint{
     background: linear-gradient(90deg, rgba(6,182,212,0.06), rgba(99,102,241,0.03));
     border-left:3px solid var(--accent);
@@ -152,6 +162,7 @@
     color:#dff7fb;
     font-weight:700;
     font-size:13px;
+    margin-top:6px;
   }
 
   .meta {
@@ -169,12 +180,71 @@
     margin-top:6px;
   }
 
+  code{background:rgba(255,255,255,0.03);padding:2px 6px;border-radius:6px;font-family:monospace;font-size:12px}
+
   .small{font-size:12px;color:var(--muted);}
 
-  /* responsive */
-  @media (max-width:720px){
-    .thumb{flex:0 0 96px;height:68px}
-    .num{font-size:12px;padding:5px 8px}
+  /* -------------------------
+     RESPONSIVE ADJUSTMENTS
+     ------------------------- */
+
+  /* Large desktops: slightly bigger padding */
+  @media (min-width:1100px){
+    :root{ --pad:18px; }
+    .title{font-size:16px}
+    header .headtext h1{font-size:22px}
+  }
+
+  /* Medium screens: reduce thumb and spacing */
+  @media (max-width:900px){
+    .card{ padding:12px; gap:10px; }
+    .thumb{flex:0 0 100px; height:72px}
+    .num{font-size:13px;padding:5px 8px}
+    .block{flex-basis:180px}
+  }
+
+  /* Small tablets and large phones:
+     - stack lists vertically to avoid cramped columns
+     - increase tap area (padding) and font sizes for readability */
+  @media (max-width:640px){
+    body{ padding:20px; }
+    header{ gap:12px; margin-bottom:14px; align-items:flex-start; }
+    .logo{ width:56px; height:56px; border-radius:12px }
+    header .headtext h1{ font-size:18px }
+    header .headtext p{ font-size:12px }
+
+    .grid{ gap:12px }
+    .card{
+      flex-direction:row;
+      padding:12px;
+      align-items:flex-start;
+      min-height:100px;
+    }
+    .thumb{ flex:0 0 88px; height:64px; }
+    .content{ gap:6px }
+    .title{ font-size:14px }
+    .desc{ font-size:12px }
+
+    /* stack the two list blocks vertically */
+    .lists{ flex-direction:column; gap:8px }
+    .block{ flex-basis:100%; }
+
+    .hint{ font-size:13px; padding:9px }
+    .submit{ font-size:12px }
+
+    .num{ left:6px; top:6px; font-size:12px; padding:5px 8px }
+  }
+
+  /* Extra small phones: single-column tight spacing */
+  @media (max-width:420px){
+    body{ padding:14px; }
+    .page{ max-width:100% }
+    .thumb{ display:flex; flex:0 0 76px; height:60px; }
+    .title{ font-size:13px }
+    ul,ol{ font-size:13px }
+    .hint{ font-size:12px }
+    .card{ gap:10px; padding:10px }
+    .num{ font-size:11px; padding:4px 7px }
   }
 </style>
 </head>
@@ -190,11 +260,12 @@
 
     <main class="grid">
 
+      <!-- (cards content unchanged) -->
       <!-- 1 -->
       <article class="card">
         <div class="thumb" aria-hidden="true">
           <div class="num">1</div>
-          <svg width="100" height="64" viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+          <svg width="100" height="64" viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Calculator thumbnail">
             <rect width="100" height="64" rx="8" fill="#071023"/>
             <text x="50" y="38" font-size="12" fill="#bfefff" text-anchor="middle" font-family="Arial">Calculator</text>
           </svg>
