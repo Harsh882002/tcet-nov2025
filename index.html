@@ -1,276 +1,562 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Web Projects — HTML CSS JS (For Students)</title>
-<style>
-  :root{
-    --bg: #0f172a;
-    --muted: #94a3b8;
-    --accent: #06b6d4;
-    --card-grad-a: rgba(255,255,255,0.02);
-    --card-grad-b: rgba(255,255,255,0.01);
-    --radius:14px;
-    --maxw:1200px;
-    --pad:14px;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Web Projects — HTML CSS JS (For Students)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --bg-secondary: #0f172a;
+      --muted: #94a3b8;
+      --accent: #06b6d4;
+      --accent-secondary: #6366f1;
+      --text-primary: #f8fafc;
+      --text-secondary: #e2e8f0;
+      --card-bg: rgba(15, 23, 42, 0.5);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --radius: 16px;
+      --radius-lg: 20px;
+      --maxw: 1280px;
+      --pad: 24px;
+    }
 
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    background:
-      radial-gradient(800px 400px at 10% 10%, rgba(6,182,212,0.06), transparent 8%),
-      radial-gradient(700px 350px at 90% 90%, rgba(99,102,241,0.045), transparent 8%),
-      var(--bg);
-    color:#e6eef8;
-    padding:36px 18px;
-    display:flex;
-    justify-content:center;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* page container */
-  .page{
-    width:100%;
-    max-width:var(--maxw);
-  }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  header{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    margin-bottom:22px;
-  }
+    html,
+    body {
+      height: 100%;
+      overflow-x: hidden;
+    }
 
-  .logo {
-    width:68px;
-    height:68px;
-    border-radius:14px;
-    background:linear-gradient(135deg,#06b6d4,#6366f1);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-    flex-shrink:0;
-  }
-  .logo strong{color:white;font-size:18px}
+    body {
+      margin: 0;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-secondary);
+      padding: 40px 24px;
+      display: flex;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      min-height: 100vh;
+    }
 
-  header .headtext h1{
-    margin:0;
-    font-size:20px;
-    letter-spacing:-0.2px;
-  }
-  header .headtext p{margin:6px 0 0;color:var(--muted);font-size:13px;max-width:880px}
+    /* Animated gradient background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle 800px at 20% 30%, rgba(6, 182, 212, 0.12), transparent 50%),
+        radial-gradient(circle 600px at 80% 70%, rgba(99, 102, 241, 0.1), transparent 50%),
+        radial-gradient(circle 400px at 50% 50%, rgba(168, 85, 247, 0.08), transparent 50%);
+      opacity: 1;
+      z-index: -1;
+      animation: gradientShift 20s ease infinite;
+    }
 
-  /* grid: responsive columns - auto-fit handles many sizes */
-  .grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap:18px;
-    margin-top:14px;
-  }
+    @keyframes gradientShift {
 
-  /* card */
-  .card{
-    background: linear-gradient(180deg, var(--card-grad-a), var(--card-grad-b));
-    border-radius:var(--radius);
-    padding:var(--pad);
-    box-shadow: 0 10px 30px rgba(2,6,23,0.6);
-    border: 1px solid rgba(255,255,255,0.03);
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-    transition: transform .16s ease, box-shadow .16s ease;
-    min-height:110px;
-  }
-  .card:hover{ transform: translateY(-6px); box-shadow: 0 18px 40px rgba(2,6,23,0.7); }
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
 
-  /* thumbnail */
-  .thumb{
-    position:relative;
-    flex:0 0 120px;
-    height:86px;
-    border-radius:10px;
-    overflow:hidden;
-    background: linear-gradient(135deg,#0b1220,#071023);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border: 1px solid rgba(255,255,255,0.03);
-    padding:8px;
-  }
-  .thumb svg{ display:block; width:100%; height:100%; object-fit:cover }
+      50% {
+        opacity: 0.8;
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
 
-  .num {
-    position:absolute;
-    left:8px;
-    top:8px;
-    background: rgba(255,255,255,0.06);
-    color:#e6f9ff;
-    padding:6px 10px;
-    border-radius:8px;
-    font-weight:800;
-    font-size:14px;
-    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
-  }
+    /* Floating particles effect */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.1), transparent),
+        radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.08), transparent),
+        radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.06), transparent),
+        radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, 0.05), transparent),
+        radial-gradient(2px 2px at 90% 60%, rgba(255, 255, 255, 0.07), transparent);
+      background-size: 200% 200%;
+      background-position: 0% 0%;
+      animation: particleFloat 30s ease-in-out infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
 
-  /* content column */
-  .content{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    min-width:0;
-  }
+    @keyframes particleFloat {
 
-  .title{
-    font-weight:700;
-    font-size:15px;
-    color:#f8fafc;
-    line-height:1.1;
-  }
-  .desc{ color:var(--muted); font-size:13px; margin-top:2px; }
+      0%,
+      100% {
+        background-position: 0% 0%;
+      }
 
-  .lists{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-  }
+      50% {
+        background-position: 100% 100%;
+      }
+    }
 
-  .block{
-    min-width:0;
-    flex:1 1 220px;
-  }
+    /* page container */
+    .page {
+      width: 100%;
+      max-width: var(--maxw);
+      position: relative;
+      z-index: 1;
+    }
 
-  .block strong{display:block;color:#cfe8ff;margin-bottom:6px;font-size:13px}
-  ul, ol{
-    margin:0 0 0 16px;
-    color:#e6eef8;
-    font-size:13px;
-    line-height:1.4;
-  }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
 
-  .hint{
-    background: linear-gradient(90deg, rgba(6,182,212,0.06), rgba(99,102,241,0.03));
-    border-left:3px solid var(--accent);
-    padding:10px;
-    border-radius:8px;
-    color:#dff7fb;
-    font-weight:700;
-    font-size:13px;
-    margin-top:6px;
-  }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
 
-  .meta {
-    display:flex;
-    gap:10px;
-    align-items:center;
-    justify-content:flex-start;
-    margin-top:8px;
-    flex-wrap:wrap;
-  }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  .submit{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:6px;
-  }
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #06b6d4 0%, #6366f1 50%, #a855f7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 10px 40px rgba(6, 182, 212, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-  code{background:rgba(255,255,255,0.03);padding:2px 6px;border-radius:6px;font-family:monospace;font-size:12px}
+    .logo::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: logoShine 3s ease-in-out infinite;
+    }
 
-  .small{font-size:12px;color:var(--muted);}
+    @keyframes logoShine {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
 
-  /* -------------------------
+      50%,
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotate(5deg);
+      box-shadow:
+        0 15px 50px rgba(6, 182, 212, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    }
+
+    .logo strong {
+      color: white;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    header .headtext h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    header .headtext p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 880px;
+      line-height: 1.6;
+    }
+
+    /* grid: responsive columns */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    /* card - vertical layout without thumbnails */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius);
+      padding: var(--pad);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px var(--card-border) inset;
+      border: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: cardFadeIn 0.6s ease forwards;
+    }
+
+    @keyframes cardFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Stagger animation for cards */
+    .card:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .card:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .card:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    .card:nth-child(4) {
+      animation-delay: 0.25s;
+    }
+
+    .card:nth-child(5) {
+      animation-delay: 0.3s;
+    }
+
+    .card:nth-child(6) {
+      animation-delay: 0.35s;
+    }
+
+    .card:nth-child(7) {
+      animation-delay: 0.4s;
+    }
+
+    .card:nth-child(8) {
+      animation-delay: 0.45s;
+    }
+
+    .card:nth-child(9) {
+      animation-delay: 0.5s;
+    }
+
+    .card:nth-child(10) {
+      animation-delay: 0.55s;
+    }
+
+    .card:nth-child(n+11) {
+      animation-delay: 0.6s;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg,
+          transparent,
+          var(--accent) 50%,
+          transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow:
+        0 20px 60px rgba(6, 182, 212, 0.2),
+        0 0 0 1px rgba(6, 182, 212, 0.2) inset;
+      border-color: rgba(6, 182, 212, 0.3);
+    }
+
+    /* number badge */
+    .num {
+      position: absolute;
+      left: 26px;
+      top: 20px;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.9), rgba(99, 102, 241, 0.9));
+      color: white;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 10;
+    }
+
+    /* content column */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-top: 42px;
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--text-primary);
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+    }
+
+    .desc {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    .lists {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .block {
+      min-width: 0;
+      flex: 1 1 220px;
+    }
+
+    .block strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 0 18px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    ul li,
+    ol li {
+      margin-bottom: 6px;
+    }
+
+    .hint {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(99, 102, 241, 0.05));
+      border-left: 3px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 10px;
+      color: #e0f2fe;
+      font-weight: 600;
+      font-size: 13px;
+      margin-top: 4px;
+      line-height: 1.6;
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1);
+    }
+
+    .meta {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .submit {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 0;
+      line-height: 1.6;
+    }
+
+    code {
+      background: rgba(6, 182, 212, 0.1);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* -------------------------
      RESPONSIVE ADJUSTMENTS
      ------------------------- */
 
-  /* Large desktops: slightly bigger padding */
-  @media (min-width:1100px){
-    :root{ --pad:18px; }
-    .title{font-size:16px}
-    header .headtext h1{font-size:22px}
-  }
+    @media (min-width:1100px) {
+      :root {
+        --pad: 28px;
+      }
 
-  /* Medium screens: reduce thumb and spacing */
-  @media (max-width:900px){
-    .card{ padding:12px; gap:10px; }
-    .thumb{flex:0 0 100px; height:72px}
-    .num{font-size:13px;padding:5px 8px}
-    .block{flex-basis:180px}
-  }
+      .title {
+        font-size: 20px
+      }
 
-  /* Small tablets and large phones:
-     - stack lists vertically to avoid cramped columns
-     - increase tap area (padding) and font sizes for readability */
-  @media (max-width:640px){
-    body{ padding:20px; }
-    header{ gap:12px; margin-bottom:14px; align-items:flex-start; }
-    .logo{ width:56px; height:56px; border-radius:12px }
-    header .headtext h1{ font-size:18px }
-    header .headtext p{ font-size:12px }
+      header .headtext h1 {
+        font-size: 36px
+      }
 
-    .grid{ gap:12px }
-    .card{
-      flex-direction:row;
-      padding:12px;
-      align-items:flex-start;
-      min-height:100px;
+      header .headtext p {
+        font-size: 17px
+      }
+
+      .grid {
+        gap: 28px
+      }
     }
-    .thumb{ flex:0 0 88px; height:64px; }
-    .content{ gap:6px }
-    .title{ font-size:14px }
-    .desc{ font-size:12px }
 
-    /* stack the two list blocks vertically */
-    .lists{ flex-direction:column; gap:8px }
-    .block{ flex-basis:100%; }
+    @media (max-width:900px) {
+      .card {
+        padding: 20px;
+        gap: 14px;
+      }
 
-    .hint{ font-size:13px; padding:9px }
-    .submit{ font-size:12px }
+      .num {
+        font-size: 14px;
+        padding: 6px 12px;
+        left: 16px;
+        top: 16px;
+      }
 
-    .num{ left:6px; top:6px; font-size:12px; padding:5px 8px }
-  }
+      .card {
+      animation: none;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease,
+      transform 0.6s ease;
+    }
 
-  /* Extra small phones: single-column tight spacing */
-  @media (max-width:420px){
-    body{ padding:14px; }
-    .page{ max-width:100% }
-    .thumb{ display:flex; flex:0 0 76px; height:60px; }
-    .title{ font-size:13px }
-    ul,ol{ font-size:13px }
-    .hint{ font-size:12px }
-    .card{ gap:10px; padding:10px }
-    .num{ font-size:11px; padding:4px 7px }
-  }
-</style>
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+  </style>
+  <script>
+    // Intersection Observer for scroll animations
+    document.addEventListener('DOMContentLoaded', function () {
+      const cards = document.querySelectorAll('.card');
+
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      cards.forEach(card => {
+        observer.observe(card);
+      });
+    });
+  </script>
 </head>
+
 <body>
   <div class="page">
     <header>
       <div class="logo"><strong>PROJ</strong></div>
       <div class="headtext">
         <h1>HTML • CSS • JavaScript — Project Topics</h1>
-        <p>Clear project briefs for students — each card shows outcomes, required features, one helpful hint, and submission details.</p>
+        <p>Clear project briefs for students — each card shows outcomes, required features, one helpful hint, and
+          submission details.</p>
       </div>
     </header>
 
     <main class="grid">
 
-      <!-- (cards content unchanged) -->
       <!-- 1 -->
       <article class="card">
-        <div class="thumb" aria-hidden="true">
-          <div class="num">1</div>
-          <svg width="100" height="64" viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Calculator thumbnail">
-            <rect width="100" height="64" rx="8" fill="#071023"/>
-            <text x="50" y="38" font-size="12" fill="#bfefff" text-anchor="middle" font-family="Arial">Calculator</text>
-          </svg>
-        </div>
-
+        <div class="num">1</div>
         <div class="content">
           <div>
             <div class="title">Digital Calculator</div>
@@ -300,18 +586,15 @@
           <div class="hint">Hint: Maintain the current expression as a string and tokenise/evaluate it safely.</div>
 
           <div class="meta">
-            <div class="submit">Submission: <code>index.html</code>, <code>style.css</code>, <code>script.js</code> + screenshot + short note.</div>
+            <div class="submit">Submission: <code>index.html</code>, <code>style.css</code>, <code>script.js</code> +
+              screenshot + short note.</div>
           </div>
         </div>
       </article>
 
       <!-- 2 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">2</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Stopwatch</text></svg>
-        </div>
-
+        <div class="num">2</div>
         <div class="content">
           <div>
             <div class="title">Stopwatch / Timer</div>
@@ -340,17 +623,15 @@
 
           <div class="hint">Hint: Keep elapsed milliseconds in a variable and convert to mm:ss for display.</div>
 
-          <div class="meta"><div class="submit">Submission: HTML/CSS/JS + screenshot + note on interval handling.</div></div>
+          <div class="meta">
+            <div class="submit">Submission: HTML/CSS/JS + screenshot + note on interval handling.</div>
+          </div>
         </div>
       </article>
 
       <!-- 3 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">3</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Quiz App</text></svg>
-        </div>
-
+        <div class="num">3</div>
         <div class="content">
           <div>
             <div class="title">Quiz App</div>
@@ -377,19 +658,18 @@
             </div>
           </div>
 
-          <div class="hint">Hint: Represent questions as objects: {q, options:[], answerIndex} and track currentIndex.</div>
+          <div class="hint">Hint: Represent questions as objects: {q, options:[], answerIndex} and track currentIndex.
+          </div>
 
-          <div class="meta"><div class="submit">Submission: files + sample questions JSON + screenshot.</div></div>
+          <div class="meta">
+            <div class="submit">Submission: files + sample questions JSON + screenshot.</div>
+          </div>
         </div>
       </article>
 
       <!-- 4 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">4</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Image Slider</text></svg>
-        </div>
-
+        <div class="num">4</div>
         <div class="content">
           <div>
             <div class="title">Image Slider / Carousel</div>
@@ -416,19 +696,18 @@
             </div>
           </div>
 
-          <div class="hint">Hint: Maintain currentIndex and reset interval on manual navigation to avoid fast jumps.</div>
+          <div class="hint">Hint: Maintain currentIndex and reset interval on manual navigation to avoid fast jumps.
+          </div>
 
-          <div class="meta"><div class="submit">Submission: files + 3 example images + screenshot.</div></div>
+          <div class="meta">
+            <div class="submit">Submission: files + 3 example images + screenshot.</div>
+          </div>
         </div>
       </article>
 
       <!-- 5 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">5</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Reg Form</text></svg>
-        </div>
-
+        <div class="num">5</div>
         <div class="content">
           <div>
             <div class="title">Student Registration Form</div>
@@ -457,17 +736,15 @@
 
           <div class="hint">Hint: Use the constraint validation API (checkValidity()) with custom messages.</div>
 
-          <div class="meta"><div class="submit">Submission: files + screenshots of valid & invalid states.</div></div>
+          <div class="meta">
+            <div class="submit">Submission: files + screenshots of valid & invalid states.</div>
+          </div>
         </div>
       </article>
 
       <!-- 6 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">6</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Analog Clock</text></svg>
-        </div>
-
+        <div class="num">6</div>
         <div class="content">
           <div>
             <div class="title">Analog Clock</div>
@@ -494,19 +771,18 @@
             </div>
           </div>
 
-          <div class="hint">Hint: Degrees — hours*30 + minutes*0.5; minutes*6; seconds*6 for rotation calculations.</div>
+          <div class="hint">Hint: Degrees — hours*30 + minutes*0.5; minutes*6; seconds*6 for rotation calculations.
+          </div>
 
-          <div class="meta"><div class="submit">Submission: files + GIF or screenshot with moving hands.</div></div>
+          <div class="meta">
+            <div class="submit">Submission: files + GIF or screenshot with moving hands.</div>
+          </div>
         </div>
       </article>
 
       <!-- 7 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">7</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Unit Conv</text></svg>
-        </div>
-
+        <div class="num">7</div>
         <div class="content">
           <div>
             <div class="title">Unit Converter</div>
@@ -535,17 +811,15 @@
 
           <div class="hint">Hint: Keep conversion logic in separate functions for each type for clarity.</div>
 
-          <div class="meta"><div class="submit">Submission: files + notes on formulas used.</div></div>
+          <div class="meta">
+            <div class="submit">Submission: files + notes on formulas used.</div>
+          </div>
         </div>
       </article>
 
       <!-- 8 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">8</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Theme</text></svg>
-        </div>
-
+        <div class="num">8</div>
         <div class="content">
           <div>
             <div class="title">Color Theme Switcher</div>
@@ -574,21 +848,20 @@
 
           <div class="hint">Hint: Save 'theme' in localStorage and read it on page load to apply the chosen theme.</div>
 
-          <div class="meta"><div class="submit">Submission: files + mention where theme is saved (if used).</div></div>
+          <div class="meta">
+            <div class="submit">Submission: files + mention where theme is saved (if used).</div>
+          </div>
         </div>
       </article>
 
       <!-- 9 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">9</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Password</text></svg>
-        </div>
-
+        <div class="num">9</div>
         <div class="content">
           <div>
             <div class="title">Random Password Generator</div>
-            <div class="desc">Generate passwords with length & options for numbers/symbols/caps and copy to clipboard.</div>
+            <div class="desc">Generate passwords with length & options for numbers/symbols/caps and copy to clipboard.
+            </div>
           </div>
 
           <div class="lists">
@@ -613,17 +886,15 @@
 
           <div class="hint">Hint: Build a character pool string based on options, then pick random chars from it.</div>
 
-          <div class="meta"><div class="submit">Submission: files + example generated password screenshot.</div></div>
+          <div class="meta">
+            <div class="submit">Submission: files + example generated password screenshot.</div>
+          </div>
         </div>
       </article>
 
       <!-- 10 -->
       <article class="card">
-        <div class="thumb">
-          <div class="num">10</div>
-          <svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Notes</text></svg>
-        </div>
-
+        <div class="num">10</div>
         <div class="content">
           <div>
             <div class="title">Notes App (localStorage)</div>
@@ -650,15 +921,18 @@
             </div>
           </div>
 
-          <div class="hint">Hint: Save notes as an array of objects in JSON inside localStorage for easy retrieval.</div>
+          <div class="hint">Hint: Save notes as an array of objects in JSON inside localStorage for easy retrieval.
+          </div>
 
-          <div class="meta"><div class="submit">Submission: files + example saved notes screenshot.</div></div>
+          <div class="meta">
+            <div class="submit">Submission: files + example saved notes screenshot.</div>
+          </div>
         </div>
       </article>
 
       <!-- 11 -->
       <article class="card">
-        <div class="thumb"><div class="num">11</div><svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">BMI</text></svg></div>
+        <div class="num">11</div>
         <div class="content">
           <div>
             <div class="title">BMI Calculator</div>
@@ -686,13 +960,16 @@
           </div>
 
           <div class="hint">Hint: Convert height from cm to meters first: BMI = weight / (height_m * height_m)</div>
-          <div class="meta"><div class="submit">Submission: files + sample calculation screenshot.</div></div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + sample calculation screenshot.</div>
+          </div>
         </div>
       </article>
 
       <!-- 12 -->
       <article class="card">
-        <div class="thumb"><div class="num">12</div><svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Typing</text></svg></div>
+        <div class="num">12</div>
         <div class="content">
           <div>
             <div class="title">Typing Speed Test</div>
@@ -720,13 +997,16 @@
           </div>
 
           <div class="hint">Hint: WPM ≈ (correctChars / 5) ÷ minutesElapsed — convert seconds to minutes.</div>
-          <div class="meta"><div class="submit">Submission: files + screenshot with WPM & accuracy.</div></div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + screenshot with WPM & accuracy.</div>
+          </div>
         </div>
       </article>
 
       <!-- 13 -->
       <article class="card">
-        <div class="thumb"><div class="num">13</div><svg width="100" height="64" viewBox="0 0 100 64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Expense</text></svg></div>
+        <div class="num">13</div>
         <div class="content">
           <div>
             <div class="title">Expense Tracker</div>
@@ -754,13 +1034,16 @@
           </div>
 
           <div class="hint">Hint: Store expenses as objects in an array and recalc total after every change.</div>
-          <div class="meta"><div class="submit">Submission: files + screenshot of list & total.</div></div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + screenshot of list & total.</div>
+          </div>
         </div>
       </article>
 
       <!-- 14 -->
       <article class="card">
-        <div class="thumb"><div class="num">14</div><svg width="100" height="64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Currency</text></svg></div>
+        <div class="num">14</div>
         <div class="content">
           <div>
             <div class="title">Currency Converter</div>
@@ -787,14 +1070,18 @@
             </div>
           </div>
 
-          <div class="hint">Hint: If using an API, handle errors and provide a fallback static rate for offline/demo mode.</div>
-          <div class="meta"><div class="submit">Submission: files + mention API or static rate used.</div></div>
+          <div class="hint">Hint: If using an API, handle errors and provide a fallback static rate for offline/demo
+            mode.</div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + mention API or static rate used.</div>
+          </div>
         </div>
       </article>
 
       <!-- 15 -->
       <article class="card">
-        <div class="thumb"><div class="num">15</div><svg width="100" height="64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Age Calc</text></svg></div>
+        <div class="num">15</div>
         <div class="content">
           <div>
             <div class="title">Age Calculator</div>
@@ -821,14 +1108,18 @@
             </div>
           </div>
 
-          <div class="hint">Hint: Compare year/month/day separately for exact results or use total days as approximation.</div>
-          <div class="meta"><div class="submit">Submission: files + example DOB result screenshot.</div></div>
+          <div class="hint">Hint: Compare year/month/day separately for exact results or use total days as
+            approximation.</div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + example DOB result screenshot.</div>
+          </div>
         </div>
       </article>
 
       <!-- 16 -->
       <article class="card">
-        <div class="thumb"><div class="num">16</div><svg width="100" height="64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Weather</text></svg></div>
+        <div class="num">16</div>
         <div class="content">
           <div>
             <div class="title">Weather App (simple API)</div>
@@ -855,14 +1146,18 @@
             </div>
           </div>
 
-          <div class="hint">Hint: For learning, a client-side API key is fine — mention the key usage; for production, use a server proxy.</div>
-          <div class="meta"><div class="submit">Submission: files + API used + screenshot.</div></div>
+          <div class="hint">Hint: For learning, a client-side API key is fine — mention the key usage; for production,
+            use a server proxy.</div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + API used + screenshot.</div>
+          </div>
         </div>
       </article>
 
       <!-- 17 -->
       <article class="card">
-        <div class="thumb"><div class="num">17</div><svg width="100" height="64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Char Count</text></svg></div>
+        <div class="num">17</div>
         <div class="content">
           <div>
             <div class="title">Character Counter</div>
@@ -890,13 +1185,16 @@
           </div>
 
           <div class="hint">Hint: Use <code>str.trim().split(/\s+/)</code> to count words reliably.</div>
-          <div class="meta"><div class="submit">Submission: files + screenshot showing counter.</div></div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + screenshot showing counter.</div>
+          </div>
         </div>
       </article>
 
       <!-- 18 -->
       <article class="card">
-        <div class="thumb"><div class="num">18</div><svg width="100" height="64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">BG Color</text></svg></div>
+        <div class="num">18</div>
         <div class="content">
           <div>
             <div class="title">Background Color Changer</div>
@@ -923,14 +1221,18 @@
             </div>
           </div>
 
-          <div class="hint">Hint: Generate hex colors with <code>Math.floor(Math.random()*16777215).toString(16)</code> and pad if necessary.</div>
-          <div class="meta"><div class="submit">Submission: files + final color screenshot.</div></div>
+          <div class="hint">Hint: Generate hex colors with <code>Math.floor(Math.random()*16777215).toString(16)</code>
+            and pad if necessary.</div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + final color screenshot.</div>
+          </div>
         </div>
       </article>
 
       <!-- 19 -->
       <article class="card">
-        <div class="thumb"><div class="num">19</div><svg width="100" height="64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Landing</text></svg></div>
+        <div class="num">19</div>
         <div class="content">
           <div>
             <div class="title">Simple Landing Page</div>
@@ -958,13 +1260,16 @@
           </div>
 
           <div class="hint">Hint: Use mobile-first design with flexbox/grid and breakpoints for responsiveness.</div>
-          <div class="meta"><div class="submit">Submission: HTML + CSS + screenshot of mobile & desktop views.</div></div>
+
+          <div class="meta">
+            <div class="submit">Submission: HTML + CSS + screenshot of mobile & desktop views.</div>
+          </div>
         </div>
       </article>
 
       <!-- 20 -->
       <article class="card">
-        <div class="thumb"><div class="num">20</div><svg width="100" height="64"><rect width="100" height="64" rx="8" fill="#071023"/><text x="50" y="38" font-size="11" fill="#bfefff" text-anchor="middle">Form Err</text></svg></div>
+        <div class="num">20</div>
         <div class="content">
           <div>
             <div class="title">Form with Error Highlighting</div>
@@ -991,16 +1296,21 @@
             </div>
           </div>
 
-          <div class="hint">Hint: Add/remove an <code>.error</code> class on input events and style the class with red border + message.</div>
-          <div class="meta"><div class="submit">Submission: files + screenshots of both error & success states.</div></div>
+          <div class="hint">Hint: Add/remove an <code>.error</code> class on input events and style the class with red
+            border + message.</div>
+
+          <div class="meta">
+            <div class="submit">Submission: files + screenshots of both error & success states.</div>
+          </div>
         </div>
       </article>
 
     </main>
 
-    <footer style="margin-top:22px;color:var(--muted);font-size:13px;text-align:center">
-      Tip: Replace inline SVG thumbs with real screenshots later (name them project1.png, project2.png, ...).
+    <footer>
+      Tip: These projects are designed for learning. Feel free to enhance them with your own creative touches!
     </footer>
   </div>
 </body>
+
 </html>
